@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<div class="topnav">
+    <a href="index.html">Home</a>
+    <a href="3d.html">Ultimaker 3D Printer</a>
+    <a href="resin.html">Forms 3 Resin Printer</a>
+    <a class="active" href="j850.html">J850 Full Color Printer</a>
+    <a href="cutter.html">Roland Vinyl Cutter</a>
+</div>
+
+<body>
+
+    <div class="container">
+        <h1>J850 FULL COLOR PRINT CALCULATOR</h1>
+
+        <div class="wrapper">
+            <p>Build Resin: </p>
+            <input type="text" id="build" placeholder="Total amount of build resin"> g
+
+            <p>SUP706 (Support): </p>
+            <input type="text" id="support" placeholder="Total amount of support resin"> g
+
+            <button id="calculate">Calculate</button>
+            <div class="gram">
+                <p>Total Cost Of Print:</p>
+                <span id="total">0</span>
+            </div>
+            <div class="links">
+                <img id="color" src="color.jpg" alt="Makerspace Printers">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = () => {
+            document.querySelector('#calculate').onclick = calculateJ850;
+        }
+
+        function calculateJ850() {
+            let build = document.querySelector('#build').value;
+            if (build === '') {
+                alert("Please enter a valid value");
+                return;
+            }
+
+            let support = document.querySelector('#support').value;
+            if (support === '') {
+                alert("Please enter a valid value");
+                return;
+            }
+
+            let total = ((parseFloat(build) * 0.18) + (parseFloat(support) * 0.105)) / 2;
+            total = total.toFixed(2);
+
+            document.querySelector('.gram').style.display = 'block';
+
+            if (total <= 10) {
+                document.querySelector('#total').innerHTML = '$' + total + ' OR free for your first print under $10 every 2 weeks';
+            } else {
+                document.querySelector('#total').innerHTML = '$' + total;
+            }
+        }
+    </script>
+    </div>
+</body>
+
+</html>
