@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="topnav">
+    <a href="index.html">Home</a>
+    <a href="3d.html">Ultimaker 3D Printer</a>
+    <a class="active" href="resin.html">Forms 3 Resin Printer</a>
+    <a href="j850.html">J850 Full Color Printer</a>
+    <a href="cutter.html">Roland Vinyl Cutter</a>
+  </div>
+  <div class="container">
+    <h1>RESIN PRINT CALCULATOR</h1>
+    <div class="wrapper">
+      <p>Number of milliliters: </p>
+      <input type="text" id="amount" placeholder="Total amount of milliliters"> mL
+      <p>Select type of resin: </p>
+      <select id="services">
+        <option selected disabled hidden>Select</option>
+        <option value="0.10">Formlabs Standard Resin</option>
+        <option value="0.150">Formlabs Engineering Resin</option>
+      </select>
+      <button id="calculate">Calculate</button>
+    </div>
+    <div class="gram">
+      <p>Total Cost Of Print:</p>
+      <span id="total">0</span>
+    </div>
+    <div class="links">
+      <img id="resin" src="resin.jpg" alt="Resin Printers">
+    </div>
+  </div>
+
+  <script>
+    window.onload = () => {
+      document.querySelector('#calculate').onclick = calculateMl;
+    }
+
+    function calculateMl() {
+      let amount = document.querySelector('#amount').value;
+      let services = document.querySelector('#services').value;
+
+      if (amount === '') {
+        alert("Please enter a valid value");
+        return;
+      }
+
+      let total;
+      if (services === '0.10') {
+        total = (parseFloat(amount)) * 0.10;
+      } else if (services === '0.150') {
+        total = (parseFloat(amount)) * 0.150;
+      } else {
+        alert("Please select a resin type");
+        return;
+      }
+      total = total.toFixed(2);
+
+      document.querySelector('.gram').style.display = 'block';
+
+      if (parseFloat(amount) <= 30) {
+        document.querySelector('#total').innerHTML = '$' + total + ' OR free for your first print under 30mL of the week';
+      } else {
+        document.querySelector('#total').innerHTML = '$' + total;
+      }
+    }
+  </script>
+</body>
+
+</html>
