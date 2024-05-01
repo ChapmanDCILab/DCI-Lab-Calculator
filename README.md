@@ -1,4 +1,4 @@
-# DcI-Lab-Calculator.github.io
+# [DcI-Lab-Calculator.github.io](https://github.com/zulyu/zulyu.github.io)
 
 ## Project Description 
 ### Project Background Information
