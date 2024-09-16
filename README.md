@@ -1,4 +1,4 @@
-# [DCI-Lab-Calculator.github.io](https://www.google.com/url?q=http%3A%2F%2Fzulyu.github.io&sa=D)
+# [DCI-Lab-Calculator.github.io](https://chapmandcilab.github.io/DCI-Lab-Calculator/)
 
 ## Project Description 
 
