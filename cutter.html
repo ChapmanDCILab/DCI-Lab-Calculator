@@ -26,6 +26,111 @@
       <p>Select type of paper:</p>
       <select id="services">
         <option selected disabled hidden>Select</option>
+        <option value="0.10">Sticker Paper (Matte/Glossy/Clear)</option> 
+        <option value="0.15">Butcher Paper</option>
+        <option value="0.16">Wallflair Sticker Paper</option>
+        <option value="0.13">Paparazzi Poster Paper</option>
+        <option value="0.12">Canvas Poster Paper</option>
+        <option value="0.09">Roly Poly Poster Paper</option>
+        <option value="0.08">Static Cling Paper</option>
+        <option value="0.12">Heat Transfer Paper</option>
+        <option value="0.14">Holographic Sticker Paper</option>
+      </select>
+      <button id="calculate">Calculate</button>
+    </div>
+
+    <div class="gram">
+      <p>Total Cost Of Print:</p>
+      <span id="total">0</span>
+    </div>
+
+    <script>
+      window.onload = () => {
+        document.querySelector('#calculate').onclick = calculateGrams;
+      }
+
+      function calculateGrams() {
+        let length = parseFloat(document.querySelector('#length').value);
+        let width = parseFloat(document.querySelector('#width').value);
+        let copies = parseFloat(document.querySelector('#copies').value);
+        let services = document.querySelector('#services').value;
+
+        if (isNaN(length) || isNaN(width) || isNaN(copies)) {
+          alert("Please enter valid values for Length, Width and Copies");
+          return;
+        }
+
+        if (width * copies > 700) {
+          length = (length + 4) * Math.ceil((width * copies) / 700);
+        }
+
+        let total;
+        if (services === '0.10') {
+          total = (length * 0.1) / 20;
+        } else if (services === '0.09') {
+          total = (length * 0.09) / 10;
+        } else if (services === '0.08') {
+          total = (length * 0.08) / 10;
+        } else if (services === '0.12') {
+          total = (length * 0.12) / 10;
+        } else if (services === '0.13') {
+          total = (length * 0.1) / 20;
+        } else if (services === '0.14') {
+          total = (length * 0.10) / 10;
+        } else if (services === '0.15') {
+          total = (length * 0.10) / 100;
+        } else if (services === '0.16') {
+          total = (length * 0.11) / 20;
+        } else {
+          alert("Please select a paper type");
+          return;
+        }
+        total = total.toFixed(1);
+
+        document.querySelector('.gram').style.display = 'block';
+
+        if (length <= 60 && services === '0.10') {
+          document.querySelector('#total').innerHTML = '$' + total + ' OR  free for your first sticker print under 60mm of the day!';
+        }
+        else if (length <= 800 && services === '0.15') {
+            document.querySelector('#total').innerHTML = '$' + total + ' OR  free for your first print under 800mm of the week!';
+        } else {
+          document.querySelector('#total').innerHTML = '$' + total;
+        }
+      }
+    </script>
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="topnav">
+    <a href="index.html">Home</a>
+    <a href="3d.html">Ultimaker 3D Printer</a>
+    <a href="resin.html">Forms 3 Resin Printer</a>
+    <a href="j850.html">J850 Full Color Printer</a>
+    <a class="active" href="cutter.html">Roland Vinyl Cutter</a>
+  </div>
+  <div class="container2">
+    <h1>VINYL PRINTER CALCULATOR</h1>
+    <h2> *THIS CALCULATION SERVES AN ESTIMATE OF THE TOTAL PRICE*</h2>
+    <div class="wrapper">
+      <p>Height:</p>
+      <input type="text" id="length" placeholder="Height measurement: "> mm
+      <p>Width:</p>
+      <input type="text" id="width" placeholder="Width measurement: "> mm
+      <p>Copies:</p>
+      <input type="text" id="copies" placeholder="Total number of copies: "> copies
+      <p>Select type of paper:</p>
+      <select id="services">
+        <option selected disabled hidden>Select</option>
         <option value="0.09">Sticker Paper (Matte/Glossy)</option>
         <option value="0.09">Paparazzi Poster Paper</option>
         <option value="0.12">Canvas Poster Paper</option>
@@ -90,4 +195,4 @@
     </script>
 </body>
 
-</html>
+</html> -->
