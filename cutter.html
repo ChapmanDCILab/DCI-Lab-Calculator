@@ -21,7 +21,7 @@
       <input type="text" id="width" placeholder="Width measurement: "> mm
       <p>Copies:</p>
       <input type="text" id="copies" placeholder="Total number of copies: "> copies
-      <p>Ink (optional):</p>
+      <p>Ink:</p>
       <input type="text" id="ink" placeholder="Ink amount: "> ml
       <p>Select type of paper:</p>
       <select id="services">
@@ -50,7 +50,7 @@
         let length = parseFloat(document.querySelector('#length').value);
         let width = parseFloat(document.querySelector('#width').value);
         let copies = parseFloat(document.querySelector('#copies').value);
-        let ink = parseFloat(document.querySelector('#ink').value) || 0; // Default to 0 if empty
+        let ink = parseFloat(document.querySelector('#ink').value)
         let services = document.querySelector('#services').value;
         
         if (isNaN(length) || isNaN(width) || isNaN(copies || isNaN(ink)) {
