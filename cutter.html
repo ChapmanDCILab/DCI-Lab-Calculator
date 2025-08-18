@@ -16,13 +16,13 @@
     <h2> *THIS CALCULATION SERVES AN ESTIMATE OF THE TOTAL PRICE*</h2>
     <div class="wrapper">
       <p>Height:</p>
-      <input type="text" id="length" placeholder="Height measurement: "> mm
+      <input type="number" id="length" placeholder="Height measurement"> mm
       <p>Width:</p>
-      <input type="text" id="width" placeholder="Width measurement: "> mm
+      <input type="number" id="width" placeholder="Width measurement"> mm
       <p>Copies:</p>
-      <input type="text" id="copies" placeholder="Total number of copies: "> copies
+      <input type="number" id="copies" placeholder="Total number of copies"> copies
       <p>Ink:</p>
-      <input type="text" id="ink" placeholder="Ink amount: "> ml
+      <input type="number" id="ink" placeholder="Ink amount" step="0.1"> ml
       <p>Select type of paper:</p>
       <select id="services">
         <option selected disabled hidden>Select</option>
@@ -38,85 +38,107 @@
       </select>
       <button id="calculate">Calculate</button>
     </div>
-    <div class="gram">
+    <div class="gram" style="display: none;">
       <p>Total Cost Of Print:</p>
-      <span id="total">0</span>
+      <span id="total">$0.00</span>
     </div>
-    <script>
-      window.onload = () => {
-        document.querySelector('#calculate').onclick = calculateGrams;
-      }
-      function calculateGrams() {
-        let length = parseFloat(document.querySelector('#length').value);
-        let width = parseFloat(document.querySelector('#width').value);
-        let copies = parseFloat(document.querySelector('#copies').value);
-        let ink = parseFloat(document.querySelector('#ink').value)
-        let services = document.querySelector('#services').value;
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const calculateButton = document.getElementById('calculate');
+      const totalElement = document.getElementById('total');
+      const gramDiv = document.querySelector('.gram');
+      
+      calculateButton.addEventListener('click', function() {
+        console.log('Calculate button clicked'); // Debug log
         
-        if (isNaN(length) || isNaN(width) || isNaN(copies) || isNaN(ink)) {
-          alert("Please enter valid values for Length, Width, Ink and Copies");
+        // Get input values
+        const length = parseFloat(document.getElementById('length').value) || 0;
+        const width = parseFloat(document.getElementById('width').value) || 0;
+        const copies = parseFloat(document.getElementById('copies').value) || 0;
+        const ink = parseFloat(document.getElementById('ink').value) || 0;
+        const services = document.getElementById('services').value;
+        
+        console.log('Values:', { length, width, copies, ink, services }); // Debug log
+        
+        // Validation
+        if (length <= 0 || width <= 0 || copies <= 0) {
+          alert("Please enter valid values for Height, Width, and Copies");
           return;
         }
         
-        if (width * copies > 700) {
-          length = (length + 4) * Math.ceil((width * copies) / 700);
-        }
-        
-        let paperCost;
-        if (services === '0.10') {
-          paperCost = (length * 0.1) / 20;
-        } else if (services === '0.09') {
-          paperCost = (length * 0.09) / 10;
-        } else if (services === '0.08') {
-          paperCost = (length * 0.08) / 10;
-        } else if (services === '0.12') {
-          paperCost = (length * 0.12) / 10;
-        } else if (services === '0.13') {
-          paperCost = (length * 0.1) / 20;
-        } else if (services === '0.14') {
-          paperCost = (length * 0.10) / 10;
-        } else if (services === '0.15') {
-          paperCost = (length * 0.10) / 100;
-        } else if (services === '0.16') {
-          paperCost = (length * 0.11) / 20;
-        } else {
+        if (!services || services === 'Select') {
           alert("Please select a paper type");
           return;
         }
         
+        // Adjust length if width * copies > 700
+        let adjustedLength = length;
+        if (width * copies > 700) {
+          adjustedLength = (length + 4) * Math.ceil((width * copies) / 700);
+        }
+        
+        // Calculate paper cost
+        let paperCost = 0;
+        const serviceValue = parseFloat(services);
+        
+        switch (services) {
+          case '0.10': // Sticker Paper
+            paperCost = (adjustedLength * 0.1) / 20;
+            break;
+          case '0.09': // Roly Poly
+            paperCost = (adjustedLength * 0.09) / 10;
+            break;
+          case '0.08': // Static Cling
+            paperCost = (adjustedLength * 0.08) / 10;
+            break;
+          case '0.12': // Canvas or Heat Transfer
+            paperCost = (adjustedLength * 0.12) / 10;
+            break;
+          case '0.13': // Paparazzi
+            paperCost = (adjustedLength * 0.1) / 20;
+            break;
+          case '0.14': // Holographic
+            paperCost = (adjustedLength * 0.10) / 10;
+            break;
+          case '0.15': // Butcher Paper
+            paperCost = (adjustedLength * 0.10) / 100;
+            break;
+          case '0.16': // Wallflair
+            paperCost = (adjustedLength * 0.11) / 20;
+            break;
+        }
+        
         // Calculate ink cost at $0.28 per ml
-        let inkCost = ink * 0.28;
+        const inkCost = ink * 0.28;
         
-        // Total cost is paper cost plus ink cost
-        let total = paperCost + inkCost;
-        total = total.toFixed(2);
+        // Total cost
+        const total = paperCost + inkCost;
         
-        document.querySelector('.gram').style.display = 'block';
+        console.log('Costs:', { paperCost, inkCost, total }); // Debug log
         
-        if (length <= 60 && services === '0.10') {
-          let displayText = '$' + total;
-          if (inkCost > 0) {
-            displayText += ' (Paper: $' + paperCost.toFixed(2) + ' + Ink: $' + inkCost.toFixed(2) + ')';
-          }
+        // Display result
+        gramDiv.style.display = 'block';
+        
+        let displayText = '$' + total.toFixed(2);
+        
+        // Add breakdown if ink is used
+        if (inkCost > 0) {
+          displayText += ' (Paper: $' + paperCost.toFixed(2) + ' + Ink: $' + inkCost.toFixed(2) + ')';
+        }
+        
+        // Add special offers
+        if (adjustedLength <= 60 && services === '0.10') {
           displayText += ' OR free for your first sticker print under 60mm of the day!';
-          document.querySelector('#total').innerHTML = displayText;
-        }
-        else if (length <= 800 && services === '0.15') {
-          let displayText = '$' + total;
-          if (inkCost > 0) {
-            displayText += ' (Paper: $' + paperCost.toFixed(2) + ' + Ink: $' + inkCost.toFixed(2) + ')';
-          }
+        } else if (adjustedLength <= 800 && services === '0.15') {
           displayText += ' OR free for your first print under 800mm of the week!';
-          document.querySelector('#total').innerHTML = displayText;
-        } else {
-          let displayText = '$' + total;
-          if (inkCost > 0) {
-            displayText += ' (Paper: $' + paperCost.toFixed(2) + ' + Ink: $' + inkCost.toFixed(2) + ')';
-          }
-          document.querySelector('#total').innerHTML = displayText;
         }
-      }
-    </script>
+        
+        totalElement.innerHTML = displayText;
+      });
+    });
+  </script>
 </body>
 </html>
 
