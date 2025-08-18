@@ -53,8 +53,8 @@
         let ink = parseFloat(document.querySelector('#ink').value) || 0; // Default to 0 if empty
         let services = document.querySelector('#services').value;
         
-        if (isNaN(length) || isNaN(width) || isNaN(copies)) {
-          alert("Please enter valid values for Length, Width and Copies");
+        if (isNaN(length) || isNaN(width) || isNaN(copies || isNaN(ink)) {
+          alert("Please enter valid values for Length, Width, Ink and Copies");
           return;
         }
         
