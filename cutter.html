@@ -21,6 +21,8 @@
       <input type="text" id="length" placeholder="Height measurement: "> mm
       <p>Width:</p>
       <input type="text" id="width" placeholder="Width measurement: "> mm
+      <p>Ink:</p>
+      <input type="text" id="ink" placeholder="Ink measurement: "> ml
       <p>Copies:</p>
       <input type="text" id="copies" placeholder="Total number of copies: "> copies
       <p>Select type of paper:</p>
@@ -52,11 +54,12 @@
       function calculateGrams() {
         let length = parseFloat(document.querySelector('#length').value);
         let width = parseFloat(document.querySelector('#width').value);
+        let ink = parseFloat(document.querySelector('#ink').value);
         let copies = parseFloat(document.querySelector('#copies').value);
         let services = document.querySelector('#services').value;
 
         if (isNaN(length) || isNaN(width) || isNaN(copies)) {
-          alert("Please enter valid values for Length, Width and Copies");
+          alert("Please enter valid values for Length, Width, Ink and Copies");
           return;
         }
 
