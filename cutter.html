@@ -16,8 +16,8 @@
     <div class="wrapper">
       <p>Height:</p>
       <input type="text" id="length" placeholder="Height measurement: "> mm
-      <p>Width:</p>
-      <input type="text" id="width" placeholder="Width measurement: "> mm
+      <!-- <p>Width:</p>
+      <input type="text" id="width" placeholder="Width measurement: "> mm -->
       <p>Copies:</p>
       <input type="text" id="copies" placeholder="Total number of copies: "> copies
       <p>Ink:</p>
@@ -54,19 +54,19 @@
       }
       function calculateGrams() {
         let length = parseFloat(document.querySelector('#length').value);
-        let width = parseFloat(document.querySelector('#width').value);
+        // let width = parseFloat(document.querySelector('#width').value);
         let copies = parseFloat(document.querySelector('#copies').value);
         let ink = parseFloat(document.querySelector('#ink').value)
         let services = document.querySelector('#services').value;
         
-        if (isNaN(length) || isNaN(width) || isNaN(copies) || isNaN(ink)) {
-          alert("Please enter valid values for Length, Width, Ink and Copies");
+        if (isNaN(length) || isNaN(copies) || isNaN(ink)) {
+          alert("Please enter valid values for Length, Ink and Copies");
           return;
         }
         
-        if (width * copies > 700) {
-          length = (length + 4) * Math.ceil((width * copies) / 700);
-        }
+        // if (width * copies > 700) {
+        //   length = (length + 4) * Math.ceil((width * copies) / 700);
+        // }
         
         let paperCost;
         if (services === '0.10') {
